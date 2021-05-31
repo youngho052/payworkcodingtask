@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addList } from "../../../store/action";
 import styled from "styled-components";
 
-function InputForm() {
+function InputForm(props) {
+  const { inputValueHandle, addListHandle, inputValue } = props;
+  // const [inputValue, setInputValue] = useState();
+  // const dispatch = useDispatch();
+
+  // // 인풋 값 받아오는 핸들
+  // const inputValueHandle = (e) => {
+  //   setInputValue(e.target.value);
+  // };
+
+  // // 리스트 추가 핸들
+  // const addListHandle = () => {
+  //   // const newList = {
+  //   //   ...data,
+  //   //   checked: false
+  //   // };
+  //   dispatch(addList(inputValue));
+  // };
+
   return (
     <InputForms>
-      <TodoListInput />
-      <TodoListButton>선택</TodoListButton>
+      <TodoListInput value={inputValue} onChange={(e) => inputValueHandle(e)} />
+      <TodoListButton onClick={addListHandle}>선택</TodoListButton>
     </InputForms>
   );
 }
