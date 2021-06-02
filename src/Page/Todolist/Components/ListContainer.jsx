@@ -28,9 +28,10 @@ const TodoList = styled.ul`
 
 const List = styled.li`
   ${(props) => props.theme.flexSpacebetween}
-  height: 60px;
   padding: 15px;
-  border-top: 1px solid gray;
+  background-color: #fefefe;
+  border-radius: 10px;
+  margin-top: 15px;
 
   &:last-child {
     border-bottom: 1px solid gray;

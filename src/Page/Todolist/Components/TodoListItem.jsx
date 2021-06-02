@@ -49,7 +49,9 @@ function TodoListItem(props) {
           onChange={() => testcheckHandle(isCheck)}
         />
         {toggleInput ? (
-          <Content>{content}</Content>
+          <ContentContainer>
+            <Content>{content}</Content>
+          </ContentContainer>
         ) : (
           <ContentInput
             type="text"
@@ -79,12 +81,19 @@ function TodoListItem(props) {
 
 export default TodoListItem;
 
-const ListItem = styled.div``;
+const ListItem = styled.div`
+  ${(props) => props.theme.flexStyle}
+`;
 
-const CheckInput = styled.input``;
+const CheckInput = styled.input`
+  margin-right: 20px;
+`;
+
+const ContentContainer = styled.div`
+  width: 550px;
+`;
 
 const Content = styled.span`
-  margin-left: 10px;
   font-size: 16px;
 `;
 
@@ -95,8 +104,22 @@ const ContentInput = styled.input`
   padding: 8px 12px;
 `;
 
-const ModifyButton = styled.button``;
+const ModifyButton = styled.button`
+  padding: 8px 12px;
 
-const DeleteButton = styled.button``;
+  &:hover {
+    background-color: lightskyblue;
+    border: none;
+  }
+`;
 
-const CancelButton = styled.button``;
+const DeleteButton = styled.button`
+  padding: 8px 12px;
+
+  &:hover {
+    background-color: lightskyblue;
+    border: none;
+  }
+`;
+
+const CancelButton = styled(DeleteButton)``;

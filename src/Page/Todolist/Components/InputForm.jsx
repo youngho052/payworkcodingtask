@@ -42,17 +42,22 @@ export default InputForm;
 
 const InputForms = styled.div`
   ${(props) => props.theme.flexSpacebetween}
-  width: 450px;
+  width: 650px;
   margin-top: 45px;
 `;
 
 const TodoListInput = styled.input`
-  width: 400px;
-  height: 35px;
-  border: 1px solid gray;
+  width: 600px;
+  height: 50px;
+  margin-right: 15px;
+  padding: 8px 12px;
+  font-size: 20px;
+  background-color: #fefefe;
+  border-radius: 5px;
 `;
 const TodoListButton = styled.button`
-  width: 50px;
-  height: 35px;
-  border: 1px solid gray;
+  width: 80px;
+  height: 50px;
+  border-radius: 5px;
+  background-color: #fefefe;
 `;

@@ -15,13 +15,21 @@ function TodolistMain() {
   }, []);
 
   return (
-    <TodoLists>
-      <TodoListContainer>
-        <TodoListTitle>My TodoList</TodoListTitle>
-        <InputForm />
-        <ListContainer item={item} />
-      </TodoListContainer>
-    </TodoLists>
+    <div
+      style={{
+        background: "linear-gradient(#e66465, #9198e5)",
+        height: "100vh",
+        padding: "50px",
+      }}
+    >
+      <TodoLists>
+        <TodoListContainer>
+          <TodoListTitle>My TodoList</TodoListTitle>
+          <InputForm />
+          <ListContainer item={item} />
+        </TodoListContainer>
+      </TodoLists>
+    </div>
   );
 }
 
@@ -29,9 +37,8 @@ export default TodolistMain;
 
 const TodoLists = styled.div`
   width: 800px;
-  margin: 25px auto;
-  padding: 50px;
-  border: 1px solid #000;
+  margin: 0 auto;
+  padding: 30px;
 `;
 
 const TodoListContainer = styled.div`
