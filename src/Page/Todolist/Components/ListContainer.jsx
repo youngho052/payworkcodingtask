@@ -1,51 +1,38 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { axiosList } from "../../../store/action";
+import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import TodoListItem from "./TodoListItem";
 
-function ListContainer(props) {
-  const { todolist } = props;
-  // const todolist = useSelector((state) => state.reducer.lists?.todoList);
-  // const { todolist, count } = useSelector((state) => ({
-  //   todolist: state.todoReducer[0]?.todoList,
-  //   count: state.todoReducer[0]?.count,
-  // }));
-  // const dispatch = useDispatch();
+function ListContainer() {
+  const item = useSelector((state) => state.todoReducer);
 
-  // useEffect(() => {
-  //   dispatch(axiosList());
-  // }, []);
-
-  // useEffect(() => {}, [count]);
   return (
-    <ListContainers>
-      {todolist?.map((item, index) => {
+    <TodoList>
+      {item.todoList.map((items, index) => {
         return (
           <List key={index}>
-            <div>
-              <input type="checkbox" />
-              <span style={{ marginLeft: "30px" }}>{item.content}</span>
-            </div>
-            <div>
-              <button>수정</button>
-              <button>삭제</button>
-            </div>
+            <TodoListItem items={items} />
           </List>
         );
       })}
-    </ListContainers>
+    </TodoList>
   );
 }
 
 export default ListContainer;
 
-const ListContainers = styled.div`
-  width: 90%;
-  margin-top: 55px;
-  border: 1px solid red;
+const TodoList = styled.ul`
+  width: 100%;
+  margin-top: 50px;
 `;
 
-const List = styled.div`
+const List = styled.li`
   ${(props) => props.theme.flexSpacebetween}
-  margin-top:15px;
+  height: 60px;
+  padding: 15px;
+  border-top: 1px solid gray;
+
+  &:last-child {
+    border-bottom: 1px solid gray;
+  }
 `;
