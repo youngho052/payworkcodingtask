@@ -15,13 +15,7 @@ function TodolistMain() {
   }, []);
 
   return (
-    <div
-      style={{
-        background: "linear-gradient(#e66465, #9198e5)",
-        height: "100vh",
-        padding: "50px",
-      }}
-    >
+    <Main>
       <TodoLists>
         <TodoListContainer>
           <TodoListTitle>My TodoList</TodoListTitle>
@@ -29,11 +23,17 @@ function TodolistMain() {
           <ListContainer item={item} />
         </TodoListContainer>
       </TodoLists>
-    </div>
+    </Main>
   );
 }
 
 export default TodolistMain;
+
+const Main = styled.div`
+  background: linear-gradient(#e66465, #9198e5);
+  height: 100vh;
+  padding: 50px;
+`;
 
 const TodoLists = styled.div`
   width: 800px;

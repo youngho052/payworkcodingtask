@@ -27,7 +27,7 @@ function* axiosList() {
   yield put({ type: TODO_LIST_SUCCESS, payload: todoList });
 }
 
-// todolist 추가 처리 로직
+// todolist content 추가 처리 로직
 function* addList(add) {
   const addList = yield call(() =>
     axios
@@ -43,7 +43,7 @@ function* addList(add) {
   yield put({ type: TODO_LIST });
 }
 
-// todolist 삭제 처리 로직
+// todolist content 삭제 처리 로직
 function* deleteList(deleteItem) {
   const deleteList = yield call(() =>
     axios
@@ -58,7 +58,7 @@ function* deleteList(deleteItem) {
   yield put({ type: TODO_LIST });
 }
 
-// todolist 수정 처리 로직
+// todolist 수정 처리와 체크박스 처리 로직
 function* modifyList(checkItem) {
   const modifyList = yield call(() =>
     axios
