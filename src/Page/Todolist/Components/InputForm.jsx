@@ -3,28 +3,36 @@ import { useDispatch } from "react-redux";
 import { addList } from "../../../store/action";
 import styled from "styled-components";
 
-function InputForm(props) {
-  const { inputValueHandle, addListHandle, inputValue } = props;
-  // const [inputValue, setInputValue] = useState();
-  // const dispatch = useDispatch();
+function InputForm() {
+  const [inputValue, setInputValue] = useState("");
+  const dispatch = useDispatch();
 
-  // // 인풋 값 받아오는 핸들
-  // const inputValueHandle = (e) => {
-  //   setInputValue(e.target.value);
-  // };
+  // 작성한 인풋 값 받아오는 핸들
+  const inputValueHandle = (e) => {
+    setInputValue(e.target.value);
+  };
 
-  // // 리스트 추가 핸들
-  // const addListHandle = () => {
-  //   // const newList = {
-  //   //   ...data,
-  //   //   checked: false
-  //   // };
-  //   dispatch(addList(inputValue));
-  // };
+  // 리스트 추가 핸들
+  const addListHandle = () => {
+    dispatch(addList(inputValue));
+
+    setInputValue("");
+  };
+
+  // 리스트 추가 엔터 핸들
+  const enterHandle = (e) => {
+    if (e.key === "Enter") {
+      addListHandle();
+    }
+  };
 
   return (
     <InputForms>
-      <TodoListInput value={inputValue} onChange={(e) => inputValueHandle(e)} />
+      <TodoListInput
+        value={inputValue}
+        onChange={(e) => inputValueHandle(e)}
+        onKeyPress={(e) => enterHandle(e)}
+      />
       <TodoListButton onClick={addListHandle}>선택</TodoListButton>
     </InputForms>
   );

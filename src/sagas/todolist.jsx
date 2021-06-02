@@ -3,15 +3,17 @@ import {
   TODO_LIST,
   ADD_LIST,
   DELETE_LIST,
-  EDIT_LIST,
-  CHECK_LIST,
+  MODIFY_LIST,
   TODO_LIST_SUCCESS,
   ADD_LIST_SUCCESS,
+  DELETE_LIST_SUCCESS,
+  MODIFY_LIST_SUCCESS,
 } from "../store/types";
 import axios from "axios";
 
 const headers = { "Access-Control-Allow-Origin": "*" };
 
+// 초기 todolist 데이터 처리 로직
 function* axiosList() {
   const todoList = yield call(() =>
     axios
@@ -19,48 +21,59 @@ function* axiosList() {
         headers,
       })
       .then((res) => res.data)
+      .catch((error) => alert(error))
   );
-  console.log("사가 todolist", todoList);
 
-  yield put({ type: TODO_LIST_SUCCESS, payload: { todoList } });
+  yield put({ type: TODO_LIST_SUCCESS, payload: todoList });
 }
 
+// todolist 추가 처리 로직
 function* addList(add) {
-  console.log(">>>>>>>>>>", add.payload.addItem);
   const addList = yield call(() =>
-    fetch("/todo", {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    axios
+      .post("/todo", {
+        headers,
         content: add.payload.addItem,
-      }),
-      method: "POST",
-    }).then((res) => res.json())
+      })
+      .then((res) => res)
+      .catch((error) => alert(error))
   );
 
   yield put({ type: ADD_LIST_SUCCESS, payload: { addList } });
+  yield put({ type: TODO_LIST });
 }
 
-function* deleteList(deletes) {
-  const deleteList = yield call(() => axios.delete("/todo/:id"));
+// todolist 삭제 처리 로직
+function* deleteList(deleteItem) {
+  const deleteList = yield call(() =>
+    axios
+      .delete(`/todo/${deleteItem.payload}`, {
+        headers,
+      })
+      .then((res) => res)
+      .catch((error) => alert(error))
+  );
+
+  yield put({ type: DELETE_LIST_SUCCESS, payload: deleteList });
+  yield put({ type: TODO_LIST });
 }
 
-// function* addList(payload) {
-//   const addList = yield call(() =>
-//     axios
-//       .post("/todo", {
-//         headers,
-//         body: {
-//           content: payload.value,
-//         },
-//       })
-//       .then((res) => console.log(res))
-//   );
-//   console.log("addlist", addList);
-//   yield put({ type: ADD_LIST_SUCCESS, payload: { addList } });
-// }
+// todolist 수정 처리 로직
+function* modifyList(checkItem) {
+  const modifyList = yield call(() =>
+    axios
+      .post(`todo/${checkItem.payload.id}`, {
+        headers,
+        content: checkItem.payload.content,
+        isCheck: true,
+      })
+      .then((res) => res)
+      .catch((error) => alert(error))
+  );
+
+  yield put({ type: MODIFY_LIST_SUCCESS, payload: { modifyList } });
+  yield put({ type: TODO_LIST });
+}
 
 function* watchaxiosList() {
   yield takeEvery(TODO_LIST, axiosList);
@@ -70,4 +83,17 @@ function* watchaddList() {
   yield takeEvery(ADD_LIST, addList);
 }
 
-export default [watchaxiosList(), watchaddList()];
+function* watchdeleteList() {
+  yield takeEvery(DELETE_LIST, deleteList);
+}
+
+function* watchcheckList() {
+  yield takeEvery(MODIFY_LIST, modifyList);
+}
+
+export default [
+  watchaxiosList(),
+  watchaddList(),
+  watchdeleteList(),
+  watchcheckList(),
+];

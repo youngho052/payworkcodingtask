@@ -1,50 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
-import { axiosList, addList } from "../../store/action";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { axiosList } from "../../store/action";
 import styled from "styled-components";
 import InputForm from "./Components/InputForm";
 import ListContainer from "./Components/ListContainer";
 
 function TodolistMain() {
-  const [inputValue, setInputValue] = useState();
-  // const todolist = useSelector((state) => state.todoReducer[0]?.todoList);
-  const { todolist, count } = useSelector(
-    (state) => ({
-      todolist: state.todoReducer[0]?.todoList,
-      count: state.todoReducer[0]?.count,
-    }),
-    shallowEqual
-  );
+  const item = useSelector((state) => state.todoReducer);
   const dispatch = useDispatch();
 
+  // 초기 todolist 받아오는 로직
   useEffect(() => {
     dispatch(axiosList());
   }, []);
 
-  // 인풋 값 받아오는 핸들
-  const inputValueHandle = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  // 리스트 추가 핸들
-  const addListHandle = () => {
-    dispatch(addList(inputValue));
-
-    setInputValue();
-    // window.location.reload();
-  };
-
-  console.log("부모", todolist);
   return (
     <TodoLists>
       <TodoListContainer>
         <TodoListTitle>My TodoList</TodoListTitle>
-        <InputForm
-          inputValueHandle={inputValueHandle}
-          addListHandle={addListHandle}
-          inputValue={inputValue}
-        />
-        <ListContainer todolist={todolist} />
+        <InputForm />
+        <ListContainer item={item} />
       </TodoListContainer>
     </TodoLists>
   );
@@ -54,8 +29,8 @@ export default TodolistMain;
 
 const TodoLists = styled.div`
   width: 800px;
-  height: 700px;
   margin: 25px auto;
+  padding: 50px;
   border: 1px solid #000;
 `;
 
