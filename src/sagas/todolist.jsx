@@ -14,6 +14,11 @@ import axios from "axios";
 const headers = { "Access-Control-Allow-Origin": "*" };
 
 // 초기 todolist 데이터 처리 로직
+// function* axiosList() {
+//   const todoList = yield call(axios.get, "/todo");
+
+//   yield put({ type: TODO_LIST_SUCCESS, payload: todoList });
+// }
 function* axiosList() {
   const todoList = yield call(() =>
     axios
